@@ -167,8 +167,11 @@ The annotation `nginx.ingress.kubernetes.io/affinity-mode` defines the stickynes
 
 If you use the ``cookie`` affinity type you can also specify the name of the cookie that will be used to route the requests with the annotation `nginx.ingress.kubernetes.io/session-cookie-name`. The default is to create a cookie named 'INGRESSCOOKIE'.
 
-The NGINX annotation `nginx.ingress.kubernetes.io/session-cookie-path` defines the path that will be set on the cookie. This is optional unless the annotation `nginx.ingress.kubernetes.io/use-regex` is set to true; Session cookie paths do not support regex.
+The NGINX annotation `nginx.ingress.kubernetes.io/session-cookie-path` defines the path that will be set on the cookie. This is optional unless the annotation `nginx.ingress.kubernetes.io/use-regex` is set to true; Session cookie paths do not support regex. Use `session-cookie-path` to configure additional cookie attributes, e.g.
 
+```yaml
+nginx.ingress.kubernetes.io/session-cookie-path: "/; SameSite=Lax"
+```
 
 ### Authentication
 
