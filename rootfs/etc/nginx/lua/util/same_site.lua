@@ -23,13 +23,8 @@ function _M.same_site_none_compatible(user_agent)
     return false
   elseif string.match(user_agent, "iPad; CPU OS 12") then
     return false
-  elseif string.match(user_agent, "Macintosh") and string.match(user_agent, "Intel Mac OS X 10_14") and string.match(user_agent, "Safari") then
+  elseif string.match(user_agent, "Macintosh") and string.match(user_agent, "Intel Mac OS X 10_14") and string.match(user_agent, "Safari") and not string.match(user_agent, "Chrome") then
     return false
-  -- next two used for debugging purposes
-  elseif string.match(user_agent, "PostmanRuntime/7.21.0") then
-    return false
-  elseif string.match(user_agent, "curl") then
-    return true
   end
 
   return true
