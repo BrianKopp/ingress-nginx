@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Copyright 2018 The Kubernetes Authors.
+# Copyright 2020 The Kubernetes Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -14,7 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 if [ -n "$DEBUG" ]; then
 	set -x
 fi
@@ -23,16 +22,24 @@ set -o errexit
 set -o nounset
 set -o pipefail
 
-if [ -z "${PKG}" ]; then
-  echo "PKG must be set"
-  exit 1
+MINIMUM_GO_VERSION=go1.13
+
+if [[ -z "$(command -v go)" ]]; then
+    echo "
+Can't find 'go' in PATH, please fix and retry.
+See http://golang.org/doc/install for installation instructions.
+"
+    exit 1
 fi
 
-# enabled to use host dns resolver
-export CGO_ENABLED=1
-export GODEBUG=netdns=cgo+2
-# use vendor directory instead of go modules https://github.com/golang/go/wiki/Modules
-export GO111MODULE=off
+IFS=" " read -ra go_version <<< "$(go version)"
 
-go test -v \
-  $(go list "${PKG}/..." | grep -v vendor | grep -v '/test/e2e' | grep -v images | grep -v "docs/examples")
+if [[ "${MINIMUM_GO_VERSION}" != $(echo -e "${MINIMUM_GO_VERSION}\n${go_version[2]}" | sort -s -t. -k 1,1 -k 2,2n -k 3,3n | head -n1) && "${go_version[2]}" != "devel" ]]; then
+	echo "
+Detected go version: ${go_version[*]}.
+ingress-nginx requires ${MINIMUM_GO_VERSION} or greater.
+
+Please install ${MINIMUM_GO_VERSION} or later.
+"
+    exit 1
+fi
