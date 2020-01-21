@@ -44,9 +44,16 @@ function _M.set_cookie(self, value)
     cookie_path = ngx.var.location_path
   end
 
-  ngx.log(ngx.ERR, ngx.var.http_user_agent)
-  if same_site.same_site_none_compatible(ngx.var.http_user_agent) then
-    cookie_path = cookie_path .. "; SameSite=None"
+  local cookie_samesite = self.cookie_session_affinity.samesite
+  if cookie_samesite then
+    local cookie_conditional_samesite_none = self.cookie_session_affinity.conditional_samesite_none
+    if cookie_conditional_samesite_none and cookie_samesite == "None" and not same_site.same_site_none_compatible(ngx.var.http_user_agent) then
+      cookie_samesite = nil
+    end
+  end
+
+  if cookie_samesite then
+    cookie_path = cookie_path .. "; SameSite=" .. cookie_samesite
   end
 
   local cookie_data = {
