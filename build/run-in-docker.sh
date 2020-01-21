@@ -34,7 +34,7 @@ function cleanup {
 }
 trap cleanup EXIT
 
-E2E_IMAGE=quay.io/kubernetes-ingress-controller/e2e:v12182019-870be3bcd
+E2E_IMAGE=quay.io/kubernetes-ingress-controller/e2e:v01142020-3f0df1c35
 
 DOCKER_OPTS=${DOCKER_OPTS:-}
 
@@ -51,6 +51,9 @@ if [ ! -d "${MINIKUBE_PATH}" ]; then
   echo "Minikube directory not found! Volume will be excluded from docker build."
   MINIKUBE_VOLUME=""
 fi
+
+# create output directory as current user to avoid problem with docker.
+mkdir -p "${KUBE_ROOT}/bin" "${KUBE_ROOT}/bin/${ARCH}"
 
 docker run                                            \
   --tty                                               \
