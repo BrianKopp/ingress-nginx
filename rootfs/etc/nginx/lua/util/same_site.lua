@@ -11,7 +11,7 @@ local _M = {}
 -- Chrome >= 80 breaks things for old browsers.
 -- This function compares the user agent against known
 -- browsers which will reject SameSite=None cookies.
--- reference: https://www.chromium.org/updates/same-site
+-- reference: https://www.chromium.org/updates/same-site/incompatible-clients
 function _M.same_site_none_compatible(user_agent)
   if string.match(user_agent, "Chrome/4") then
     return false
