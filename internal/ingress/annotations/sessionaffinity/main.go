@@ -84,7 +84,7 @@ type Cookie struct {
 	// SameSite attribute value
 	SameSite string `json:"samesite"`
 	// Flag that conditionally applies SameSite=None attribute on cookie if user agent accepts it.
-	ConditionalSameSiteNone bool `json:"conditional_samesite_none"`
+	ConditionalSameSiteNone bool `json:"conditional-samesite-none"`
 }
 
 // cookieAffinityParse gets the annotation values related to Cookie Affinity
