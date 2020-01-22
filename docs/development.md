@@ -162,13 +162,6 @@ $ ./rootfs/etc/nginx/lua/test/up.sh
 $ make lua-test
 ```
 
-To run tests in a pre-configured docker environment, run:
-
-```console
-./build/run-in-docker.sh make test
-./build/run-in-docker.sh make lua-test
-```
-
 Lua tests are located in `$GOPATH/src/k8s.io/ingress-nginx/rootfs/etc/nginx/lua/test`. When creating a new test file it must follow the naming convention `<mytest>_test.lua` or it will be ignored.
 
 ## Releasing
