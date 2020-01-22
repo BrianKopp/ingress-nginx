@@ -3,7 +3,7 @@ local _M = {}
 -- determines whether to apply a SameSite=None attribute
 -- to a cookie, based on the user agent.
 -- returns: boolean
--- 
+--
 -- Chrome 80 treating third-party cookies as SameSite=Strict
 -- if SameSite is missing. Certain old browsers don't recognize
 -- SameSite=None and will reject cookies entirely bearing SameSite=None.
@@ -23,7 +23,10 @@ function _M.same_site_none_compatible(user_agent)
     return false
   elseif string.match(user_agent, "iPad; CPU OS 12") then
     return false
-  elseif string.match(user_agent, "Macintosh") and string.match(user_agent, "Intel Mac OS X 10_14") and string.match(user_agent, "Safari") and not string.match(user_agent, "Chrome") then
+  elseif string.match(user_agent, "Macintosh")
+      and string.match(user_agent, "Intel Mac OS X 10_14")
+      and string.match(user_agent, "Safari")
+      and not string.match(user_agent, "Chrome") then
     return false
   end
 

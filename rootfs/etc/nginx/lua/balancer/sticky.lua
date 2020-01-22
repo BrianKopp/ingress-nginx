@@ -47,7 +47,9 @@ function _M.set_cookie(self, value)
   local cookie_samesite = self.cookie_session_affinity.samesite
   if cookie_samesite then
     local cookie_conditional_samesite_none = self.cookie_session_affinity.conditional_samesite_none
-    if cookie_conditional_samesite_none and cookie_samesite == "None" and not same_site.same_site_none_compatible(ngx.var.http_user_agent) then
+    if cookie_conditional_samesite_none
+        and cookie_samesite == "None"
+        and not same_site.same_site_none_compatible(ngx.var.http_user_agent) then
       cookie_samesite = nil
     end
   end
